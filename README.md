@@ -2,7 +2,5 @@
 
 See `requirements.txt`
 
-## :)
-
 new content
 

@@ -1,3 +1,5 @@
+wheel
 numpy
 notebook
 matplotlib
+opencv-python

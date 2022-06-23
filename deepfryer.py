@@ -7,8 +7,12 @@ img = cv.imread("dogphotos/dog.jpg")
 amount = int(input("how intense (out of 255)?"))
 for i in range(len(img)):
     for k in range(len(img[i])): #img[i][k] contains an RGB array for the pixel i,k. eg: img[10][96] = [0,255,0] would be a green pixel at pos 10,96
-        for j in range(len(img[i][k])):          
-            img[i][k][j] = round(img[i][k][j]/amount) * amount
+        for j in range(len(img[i][k])):      
+            deviation = np.random.randint(0,amount) 
+            if np.random.randint(0,1)>1:
+                deviation *= -1
+            #img[i][k][j] = round(img[i][k][j]/amount) * amount
+            img[i][k][j] += deviation
 print(img[0][0])
 
 

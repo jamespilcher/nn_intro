@@ -4,7 +4,7 @@ from cv2 import INTER_AREA
 import numpy as np
 import cv2 as cv
 import tensorflow.keras as keras
-(X_train,y_train), (X_test, y_test) = keras.datasets.mnist.load_data()
+
 
 def one_hot(y):
     y_new = np.zeros((y.size, y.max()+1 ))
@@ -30,6 +30,7 @@ def sigmoid(z):
 
 def compute_loss(Y, Y_hat):
     m = Y.shape[1]
+
     L = -(1/m) * ( np.sum(np.multiply(np.log(Y_hat),Y)) + np.multiply(np.log(1-Y_hat),(1-Y)) )
 
     return L
@@ -39,18 +40,13 @@ def compute_loss_v2(Y, Y_hat):
     L = -(1/m) * (np.sum(np.multiply(Y, np.log(Y_hat))))
     return L
 
-X_train, X_test = X_train.reshape(60000,-1) / 255, X_test.reshape(10000,-1) / 255
-X_train, X_test = X_train.T, X_test.T #OME BACK TO THIS!
-#y_train, y_test = one_hot(zero_detectorfy(y_train)), one_hot(zero_detectorfy(y_test))
-
-y_train, y_test = zero_detectorfy(y_train), zero_detectorfy(y_test)
 
 #Z = np.matmul(W.T, X_train) + b
 
 
 #A = sigmoid(Z)
 
-if True:
+def run():
     ################################################## 
 
     learning_rate = 1
@@ -90,35 +86,76 @@ if True:
 
 ###################################################
 
-W = np.load("W.npy")
-b = np.load("b.npy")
-print("Testing...")
-print(y_test.shape)
-print(X_test.shape)
+def test():
+    W = np.load("W.npy")
+    b = np.load("b.npy")
+    print("Testing...")
+    print(y_test.shape)
+    print(X_test.shape)
 
-correct = 0
-incorrect = 0
-for k in range(200):
-    Y_hat = sigmoid(np.matmul(W.T, X_test) + b)  #1x10000 predictions...
-    fail = False
-    if y_test[0,k] == 1:
-        if (Y_hat[0, k] > 0.5):
-            correct += 1
-        if (Y_hat[0, k] < 0.5):
-            incorrect += 1
-            incorrectnumber = ("this is a zero, you said it wasn't")
-            fail = True
-    else:
-        if (Y_hat[0, k] < 0.5):
-            correct += 1
-        if (Y_hat[0, k] > 0.5):
-            incorrect += 1
-            incorrectnumber = ("this is not a zero, you said it was")
-            fail = True
+    correct = 0
+    incorrect = 0
+    for k in range(200):
+        Y_hat = sigmoid(np.matmul(W.T, X_test) + b)  #1x10000 predictions...
+        fail = False
+        if y_test[0,k] == 1:
+            if (Y_hat[0, k] > 0.5):
+                correct += 1
+            if (Y_hat[0, k] < 0.5):
+                incorrect += 1
+                incorrectnumber = ("this is a zero, you said it wasn't")
+                fail = True
+        else:
+            if (Y_hat[0, k] < 0.5):
+                correct += 1
+            if (Y_hat[0, k] > 0.5):
+                incorrect += 1
+                incorrectnumber = ("this is not a zero, you said it was")
+                fail = True
 
-    if False:
-        img = X_test[:,k].reshape(28,28)
-        img = cv.resize(img, (1080,1080), 1, 1, interpolation=INTER_AREA)
-        cv.imshow(incorrectnumber,img)
-        keyboard = cv.waitKey(0)
-print("Accuracy of: ", correct/2000)
+        if False:
+            img = X_test[:,k].reshape(28,28)
+            img = cv.resize(img, (1080,1080), 1, 1, interpolation=INTER_AREA)
+            cv.imshow(incorrectnumber,img)
+            keyboard = cv.waitKey(0)
+    print("Accuracy of: ", correct/2000)
+
+
+(X_train,y_train), (X_test, y_test) = keras.datasets.mnist.load_data()
+
+X_train, X_test = X_train.reshape(60000,-1) / 255, X_test.reshape(10000,-1) / 255
+#y_train, y_test = one_hot(zero_detectorfy(y_train)), one_hot(zero_detectorfy(y_test))
+
+y_train, y_test = zero_detectorfy(y_train), zero_detectorfy(y_test)
+
+X = X_train
+Y = y_train
+n_x = X.shape[0]
+m = X.shape[1]
+
+W = np.random.randn(n_x, 1) * 0.01
+b = np.zeros((1, 1))
+
+def train():
+    global W
+    global b
+    Z = np.matmul(W.T, X) + b
+    learning_rate = 1
+    for i in range(2000):
+        Z = np.matmul(W.T, X) + b
+        A = sigmoid(Z)
+
+        cost = compute_loss(Y, A)
+
+        dW = (1/m) * np.matmul(X, (A-Y).T)
+        db = (1/m) * np.sum(A-Y, axis=1, keepdims=True)
+
+        W = W - learning_rate * dW
+        b = b - learning_rate * db
+
+        if (i % 100 == 0):
+            print("Epoch", i, "cost: ", cost)
+
+    print("Final cost:", cost)
+
+

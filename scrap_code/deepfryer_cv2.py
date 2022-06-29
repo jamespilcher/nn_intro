@@ -3,7 +3,7 @@ from cv2 import INTER_AREA
 import numpy as np
 import cv2 as cv
 
-img = cv.imread("dogphotos/dog.jpg")
+img = cv.imread("dog_photos/dog.jpg")
 amount = int(input("how intense (out of 255)?"))
 for i in range(len(img)):
     for k in range(len(img[i])): #img[i][k] contains an RGB array for the pixel i,k. eg: img[10][96] = [0,255,0] would be a green pixel at pos 10,96

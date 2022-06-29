@@ -3,3 +3,4 @@ numpy
 notebook
 matplotlib
 opencv-python
+//tensor flow?/keras

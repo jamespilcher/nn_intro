@@ -3,4 +3,5 @@ numpy
 notebook
 matplotlib
 opencv-python
-//tensor flow?/keras
+tensorflow
+tqdm

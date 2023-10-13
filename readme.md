@@ -1,5 +1,5 @@
 # A Disorganised Collection of Neural Network Experiments
-**Warning:** Most of this won't be very useful, it's more of a timecapsule of my time at the University of Cambridge June 2022.
+**Warning:** This repo won't be very useful, it's more of a timecapsule of my June 2022 at the University of Cambridge.
 
 ## Postmortem
 

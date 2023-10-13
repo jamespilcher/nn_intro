@@ -20,7 +20,7 @@ Don't see `scrap_code` or the majority of this repo for that matter...
 
 ## Unfinished report
 
-After the internship I began writing a summary of my time. I got 2000 words in before I got busy and stopped writing. You can read it  `machine-learning-internship.md` if you dare, although some images I missing - one of the detection models labelled my white shoe and airplane, and we called it the 'Adversarial Sneaker'.
+After the internship, I began writing a summary of my time there. I got 2000 words in before I got busy (and a bit lazy) and stopped writing. You can read it  `machine-learning-internship.md` if you dare, although some images I missing - one of the detection models labelled my white shoe and airplane, and we called it the 'Adversarial Sneaker'.
 
 ## Lessons Learned
 
